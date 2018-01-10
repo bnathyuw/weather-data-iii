@@ -3,5 +3,6 @@ obj
 .vs
 *.swp
 *~
+packages
 
 
