@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MonthlyMaximumShould.cs" />
     <Compile Include="WalkingSkeletonShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
