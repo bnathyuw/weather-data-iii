@@ -12,6 +12,7 @@ namespace WeatherData.III.AcceptanceTests
             // Given some known input data
             CopyToDataRoot("input\\metOfficeObservations\\aberporthdata.txt");
             // When the monthly maximum script is run
+            Run(AnalyticsScript("monthlyMaximum.usql"));
             // And the results are read
             // Then the report has twelve lines
             // One for each month of the year
