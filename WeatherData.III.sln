@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherData.III.AcceptanceT
 EndProject
 Project("{182E2583-ECAD-465B-BB50-91101D7C24CE}") = "WeatherData.III.Analytics", "WeatherData.III.Analytics\WeatherData.III.Analytics.usqlproj", "{EE3CA9A4-0DE4-44C5-BDC9-C6471680C832}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherData.III.Objects", "WeatherData.III.Objects\WeatherData.III.Objects.csproj", "{20C570AF-3ECC-40CB-9064-BE3CF3139218}"
+EndProject
+Project("{182E2583-ECAD-465B-BB50-91101D7C24CE}") = "WeatherData.III.DataDefinition", "WeatherData.III.DataDefinition\WeatherData.III.DataDefinition.usqlproj", "{B450AFB3-CA1B-4721-81E3-DC9288BBEF59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,30 @@ Global
 		{EE3CA9A4-0DE4-44C5-BDC9-C6471680C832}.Release|x64.Build.0 = Release|x64
 		{EE3CA9A4-0DE4-44C5-BDC9-C6471680C832}.Release|x86.ActiveCfg = Release|x86
 		{EE3CA9A4-0DE4-44C5-BDC9-C6471680C832}.Release|x86.Build.0 = Release|x86
+		{20C570AF-3ECC-40CB-9064-BE3CF3139218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20C570AF-3ECC-40CB-9064-BE3CF3139218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20C570AF-3ECC-40CB-9064-BE3CF3139218}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{20C570AF-3ECC-40CB-9064-BE3CF3139218}.Debug|x64.Build.0 = Debug|Any CPU
+		{20C570AF-3ECC-40CB-9064-BE3CF3139218}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{20C570AF-3ECC-40CB-9064-BE3CF3139218}.Debug|x86.Build.0 = Debug|Any CPU
+		{20C570AF-3ECC-40CB-9064-BE3CF3139218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20C570AF-3ECC-40CB-9064-BE3CF3139218}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20C570AF-3ECC-40CB-9064-BE3CF3139218}.Release|x64.ActiveCfg = Release|Any CPU
+		{20C570AF-3ECC-40CB-9064-BE3CF3139218}.Release|x64.Build.0 = Release|Any CPU
+		{20C570AF-3ECC-40CB-9064-BE3CF3139218}.Release|x86.ActiveCfg = Release|Any CPU
+		{20C570AF-3ECC-40CB-9064-BE3CF3139218}.Release|x86.Build.0 = Release|Any CPU
+		{B450AFB3-CA1B-4721-81E3-DC9288BBEF59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B450AFB3-CA1B-4721-81E3-DC9288BBEF59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B450AFB3-CA1B-4721-81E3-DC9288BBEF59}.Debug|x64.ActiveCfg = Debug|x64
+		{B450AFB3-CA1B-4721-81E3-DC9288BBEF59}.Debug|x64.Build.0 = Debug|x64
+		{B450AFB3-CA1B-4721-81E3-DC9288BBEF59}.Debug|x86.ActiveCfg = Debug|x86
+		{B450AFB3-CA1B-4721-81E3-DC9288BBEF59}.Debug|x86.Build.0 = Debug|x86
+		{B450AFB3-CA1B-4721-81E3-DC9288BBEF59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B450AFB3-CA1B-4721-81E3-DC9288BBEF59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B450AFB3-CA1B-4721-81E3-DC9288BBEF59}.Release|x64.ActiveCfg = Release|x64
+		{B450AFB3-CA1B-4721-81E3-DC9288BBEF59}.Release|x64.Build.0 = Release|x64
+		{B450AFB3-CA1B-4721-81E3-DC9288BBEF59}.Release|x86.ActiveCfg = Release|x86
+		{B450AFB3-CA1B-4721-81E3-DC9288BBEF59}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

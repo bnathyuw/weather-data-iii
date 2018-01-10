@@ -19,25 +19,43 @@ namespace WeatherData.III.AcceptanceTests
             _dataRoot = Combine(CurrentContext.TestDirectory, "UsqlDataRoot");
             CreateDirectory(_dataRoot);
             CreateDirectory(Combine(_dataRoot, "input", "walkingSkeleton"));
-            Copy(Combine(CurrentContext.TestDirectory, "input", "walkingSkeleton", "data.txt"),
-                Combine(_dataRoot, "input", "walkingSkeleton", "data.txt"), true);
+            CopyToDataRoot("input\\walkingSkeleton\\data.txt");
+            CopyToDataRoot("WeatherData.III.Objects.dll");
+
+            Run(DataDefinitionScript("CreateDatabase.usql"));
+            Run(DataDefinitionScript("RegisterObjectsAssembly.usql"));
         }
 
         [Test]
         public void Walk()
         {
+            Run(AnalyticsScript("WalkingSkeleton.usql"));
+        }
+
+        private void Run(string script)
+        {
             var localRunHelper = new LocalRunHelper
             {
-                ScriptPath = PathToAnalyticsScript("WalkingSkeleton.usql"),
+                ScriptPath = script,
                 DataRoot = _dataRoot
             };
 
             localRunHelper.DoRun().Should().BeTrue("script should execute successfully");
         }
 
-        private static string PathToAnalyticsScript(string scriptName)
+        private static string AnalyticsScript(string scriptName)
         {
             return Combine(CurrentContext.TestDirectory, "..", "..", "..", "WeatherData.III.Analytics", scriptName);
+        }
+
+        private void CopyToDataRoot(string file)
+        {
+            Copy(Combine(CurrentContext.TestDirectory, file), Combine(_dataRoot, file), true);
+        }
+
+        private static string DataDefinitionScript(string scriptName)
+        {
+            return Combine(CurrentContext.TestDirectory, "..", "..", "..", "WeatherData.III.DataDefinition", scriptName);
         }
     }
 }

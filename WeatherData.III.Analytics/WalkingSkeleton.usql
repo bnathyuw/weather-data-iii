@@ -1,4 +1,8 @@
-﻿@data =
+﻿USE DATABASE [WeatherData];
+
+REFERENCE ASSEMBLY [Objects];
+
+@data =
     EXTRACT value int
     FROM "input\\walkingSkeleton\\data.txt"
-    USING new WalkingSkeletonExtractor();
+    USING new WeatherData.[III].Objects.WalkingSkeletonExtractor();

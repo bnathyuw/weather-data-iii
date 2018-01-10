@@ -85,6 +85,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WeatherData.III.Objects\WeatherData.III.Objects.csproj">
+      <Project>{20c570af-3ecc-40cb-9064-be3cf3139218}</Project>
+      <Name>WeatherData.III.Objects</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>copy /y "..\..\..\packages\Microsoft.Azure.DataLake.USQL.SDK.1.3.1212\build\runtime\" "$(TargetDir)"</PreBuildEvent>
