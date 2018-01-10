@@ -1,4 +1,5 @@
-﻿using Microsoft.Analytics.Interfaces;
+﻿using System.IO;
+using Microsoft.Analytics.Interfaces;
 
 namespace WeatherData.III.Objects
 {
@@ -6,7 +7,11 @@ namespace WeatherData.III.Objects
     {
         public override void Output(IRow input, IUnstructuredWriter output)
         {
-            throw new System.NotImplementedException();
+            using (var streamWriter = new StreamWriter(output.BaseStream))
+            {
+                var value = input.Get<int>("value");
+                streamWriter.WriteLine(value);
+            }
         }
     }
 }
