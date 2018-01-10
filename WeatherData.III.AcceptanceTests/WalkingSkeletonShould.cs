@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using Microsoft.Analytics.LocalRun;
+using NUnit.Framework;
 
 namespace WeatherData.III.AcceptanceTests
 {
@@ -8,6 +10,9 @@ namespace WeatherData.III.AcceptanceTests
         [Test]
         public void Walk()
         {
+            var localRunHelper = new LocalRunHelper();
+
+            localRunHelper.DoRun().Should().BeTrue("script should execute successfully");
         }
     }
 }
