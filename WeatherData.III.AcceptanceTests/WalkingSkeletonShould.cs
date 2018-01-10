@@ -2,6 +2,7 @@
 using Microsoft.Analytics.LocalRun;
 using NUnit.Framework;
 using static System.IO.Directory;
+using static System.IO.File;
 using static System.IO.Path;
 using static NUnit.Framework.TestContext;
 
@@ -17,6 +18,9 @@ namespace WeatherData.III.AcceptanceTests
         {
             _dataRoot = Combine(CurrentContext.TestDirectory, "UsqlDataRoot");
             CreateDirectory(_dataRoot);
+            CreateDirectory(Combine(_dataRoot, "input", "walkingSkeleton"));
+            Copy(Combine(CurrentContext.TestDirectory, "input", "walkingSkeleton", "data.txt"),
+                Combine(_dataRoot, "input", "walkingSkeleton", "data.txt"), true);
         }
 
         [Test]

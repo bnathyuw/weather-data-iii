@@ -1,1 +1,4 @@
-﻿
+﻿@data =
+    EXTRACT value int
+    FROM "input\\walkingSkeleton\\data.txt"
+    USING new WalkingSkeletonExtractor();
