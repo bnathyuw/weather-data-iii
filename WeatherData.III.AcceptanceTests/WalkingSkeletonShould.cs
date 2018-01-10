@@ -6,10 +6,15 @@ namespace WeatherData.III.AcceptanceTests
     [TestFixture]
     public class WalkingSkeletonShould
     {
+        [SetUp]
+        public void SetUp()
+        {
+            CopyToDataRoot("input\\walkingSkeleton\\data.txt");
+        }
+
         [Test]
         public void Walk()
         {
-            CopyToDataRoot("input\\walkingSkeleton\\data.txt");
             Run(AnalyticsScript("WalkingSkeleton.usql"));
         }
     }

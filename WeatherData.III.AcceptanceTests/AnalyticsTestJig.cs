@@ -28,6 +28,7 @@ namespace WeatherData.III.AcceptanceTests
             Run(DataDefinitionScript("RegisterObjectsAssembly.usql"));
 
             CreateDirectory(Combine(DataRoot, "input", "walkingSkeleton"));
+            CreateDirectory(Combine(DataRoot, "input", "metOfficeObservations"));
         }
 
         public static void Run(string script)
