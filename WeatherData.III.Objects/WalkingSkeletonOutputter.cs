@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using Microsoft.Analytics.Interfaces;
 
 namespace WeatherData.III.Objects

@@ -3,12 +3,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>ee3ca9a4-0de4-44c5-bdc9-c6471680c832</ProjectGuid>
+    <ProjectGuid>eb65f751-492a-4d35-baf2-8c65bbb9c47a</ProjectGuid>
     <OutputType>File</OutputType>
     <AssemblyName>Algebra.xml</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <Name>WeatherData.III.Analytics</Name>
-    <RootNamespace>WeatherData.III.Analytics</RootNamespace>
+    <Name>WeatherData.III.Analytics.Tests.DD</Name>
+    <RootNamespace>WeatherData.III.Analytics.Tests.DD</RootNamespace>
     <RuntimeVersion>default</RuntimeVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -20,13 +20,17 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Script Include="MonthlyMaximum.usql" />
-    <Script Include="WalkingSkeleton.usql" />
-    <ScriptCode Include="MonthlyMaximum.usql.cs">
-      <DependentUpon>MonthlyMaximum.usql</DependentUpon>
+    <Script Include="CreateDatabase.usql" />
+    <Script Include="RegisterObjectsAssembly.usql" />
+    <Script Include="Script.usql" />
+    <ScriptCode Include="CreateDatabase.usql.cs">
+      <DependentUpon>CreateDatabase.usql</DependentUpon>
     </ScriptCode>
-    <ScriptCode Include="WalkingSkeleton.usql.cs">
-      <DependentUpon>WalkingSkeleton.usql</DependentUpon>
+    <ScriptCode Include="RegisterObjectsAssembly.usql.cs">
+      <DependentUpon>RegisterObjectsAssembly.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="Script.usql.cs">
+      <DependentUpon>Script.usql</DependentUpon>
     </ScriptCode>
   </ItemGroup>
   <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />

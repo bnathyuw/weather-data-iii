@@ -1,0 +1,5 @@
+﻿USE DATABASE [WeatherData];
+
+DROP ASSEMBLY IF EXISTS [Objects];
+CREATE ASSEMBLY [Objects]
+FROM @"WeatherData.III.Analytics.Tests.Objects.dll";

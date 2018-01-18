@@ -1,0 +1,15 @@
+﻿USE DATABASE [WeatherData];
+
+REFERENCE ASSEMBLY [Objects];
+
+@observations =
+    EXTRACT location string,
+            year int,
+            month int,
+            maximumTemperature double?
+    FROM "input\\metOfficeObservations\\{location}data.txt"
+    USING new WeatherData.[III].Objects.MetOfficeObservationExtractor();
+
+OUTPUT @observations
+TO "output\\monthlyMaximum.csv"
+USING new WeatherData.[III].Objects.MetOfficeObservationOutputter();
