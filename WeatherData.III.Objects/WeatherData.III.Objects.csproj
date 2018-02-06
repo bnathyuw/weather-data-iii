@@ -42,6 +42,7 @@
     <Reference Include="Microsoft.Analytics.Types" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MetOfficeObservationOutputter.cs" />
     <Compile Include="MetOfficeObservationExtractor.cs" />
     <Compile Include="WalkingSkeletonExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
