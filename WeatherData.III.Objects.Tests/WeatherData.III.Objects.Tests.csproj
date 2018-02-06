@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MetOfficeObservationExtractorShould.cs" />
+    <Compile Include="MetOfficeObservationOutputterShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
