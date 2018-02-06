@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherData.III.Analytics.T
 EndProject
 Project("{182E2583-ECAD-465B-BB50-91101D7C24CE}") = "WeatherData.III.Analytics.Tests.DD", "WeatherData.III.Analytics.Tests.DD\WeatherData.III.Analytics.Tests.DD.usqlproj", "{EB65F751-492A-4D35-BAF2-8C65BBB9C47A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherData.III.Objects.Tests", "WeatherData.III.Objects.Tests\WeatherData.III.Objects.Tests.csproj", "{D87109A1-F6AA-4EE2-A2C5-E23862C77F2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,18 @@ Global
 		{EB65F751-492A-4D35-BAF2-8C65BBB9C47A}.Release|x64.Build.0 = Release|x64
 		{EB65F751-492A-4D35-BAF2-8C65BBB9C47A}.Release|x86.ActiveCfg = Release|x86
 		{EB65F751-492A-4D35-BAF2-8C65BBB9C47A}.Release|x86.Build.0 = Release|x86
+		{D87109A1-F6AA-4EE2-A2C5-E23862C77F2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D87109A1-F6AA-4EE2-A2C5-E23862C77F2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D87109A1-F6AA-4EE2-A2C5-E23862C77F2D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D87109A1-F6AA-4EE2-A2C5-E23862C77F2D}.Debug|x64.Build.0 = Debug|Any CPU
+		{D87109A1-F6AA-4EE2-A2C5-E23862C77F2D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D87109A1-F6AA-4EE2-A2C5-E23862C77F2D}.Debug|x86.Build.0 = Debug|Any CPU
+		{D87109A1-F6AA-4EE2-A2C5-E23862C77F2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D87109A1-F6AA-4EE2-A2C5-E23862C77F2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D87109A1-F6AA-4EE2-A2C5-E23862C77F2D}.Release|x64.ActiveCfg = Release|Any CPU
+		{D87109A1-F6AA-4EE2-A2C5-E23862C77F2D}.Release|x64.Build.0 = Release|Any CPU
+		{D87109A1-F6AA-4EE2-A2C5-E23862C77F2D}.Release|x86.ActiveCfg = Release|Any CPU
+		{D87109A1-F6AA-4EE2-A2C5-E23862C77F2D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
