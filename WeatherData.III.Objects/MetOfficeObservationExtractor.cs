@@ -1,36 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Linq;
 using Microsoft.Analytics.Interfaces;
 
 namespace WeatherData.III.Objects
 {
     public class MetOfficeObservationExtractor : IExtractor
     {
+        public static MetOfficeObservationExtractor WithDefaultDependencies()
+        {
+            return new MetOfficeObservationExtractor(new MetOfficeObservationReader(new CreateObservation()));
+        }
+
+        private readonly IMetOfficeObservationReader _metOfficeObservationReader;
+
+        internal MetOfficeObservationExtractor(IMetOfficeObservationReader metOfficeObservationReader)
+        {
+            _metOfficeObservationReader = metOfficeObservationReader;
+        }
+
         public override IEnumerable<IRow> Extract(IUnstructuredReader input, IUpdatableRow output)
+        {
+            return _metOfficeObservationReader.ReadObservations(ReadLines(input))
+                .Select(metOfficeObservation => Write(output, metOfficeObservation));
+        }
+
+        private static IEnumerable<string> ReadLines(IUnstructuredReader input)
         {
             using (var streamReader = new StreamReader(input.BaseStream))
             {
-                string line;
-                while ((line = streamReader.ReadLine())!= "              degC    degC    days      mm   hours")
+                while (!streamReader.EndOfStream)
                 {
-
-                }
-                while (!string.IsNullOrEmpty(line = streamReader.ReadLine()))
-                {
-                    var parts = line.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-                    output.Set("year", int.Parse(parts[0]));
-                    output.Set("month", int.Parse(parts[1]));
-                    output.Set("maximumTemperature", ParseNullableDouble(parts[2]));
-                    yield return output.AsReadOnly();
+                    yield return streamReader.ReadLine();
                 }
             }
         }
 
-        private static double? ParseNullableDouble(string part)
+        private static IRow Write(IUpdatableRow output, MetOfficeObservation metOfficeObservation)
         {
-            return part == "---" ? (double?) null : double.Parse(part);
+            output.Set("year", metOfficeObservation.Year);
+            output.Set("month", metOfficeObservation.Month);
+            output.Set("maximumTemperature", metOfficeObservation.MaximumTemperature);
+            return output.AsReadOnly();
         }
     }
 }

@@ -8,7 +8,7 @@ REFERENCE ASSEMBLY [Objects];
             month int,
             maximumTemperature double?
     FROM "input\\metOfficeObservations\\{location}data.txt"
-    USING new WeatherData.[III].Objects.MetOfficeObservationExtractor();
+    USING WeatherData.[III].Objects.MetOfficeObservationExtractor.WithDefaultDependencies();
 
 OUTPUT @observations
 TO "output\\monthlyMaximum.csv"

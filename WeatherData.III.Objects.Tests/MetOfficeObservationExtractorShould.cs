@@ -1,82 +1,82 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using FluentAssertions;
 using Microsoft.Analytics.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
+using static System.Text.Encoding;
 
 namespace WeatherData.III.Objects.Tests
 {
     [TestFixture]
-    public class MetOfficeObservationExtractorShould
+    public class MetOfficeObservationExtratorShould
     {
-        [Test]
-        public void InteractWithOutput()
+        private IMetOfficeObservationReader _metOfficeObservationReader;
+        private MetOfficeObservationExtractor _metOfficeObservationExtractor;
+        private IUnstructuredReader _input;
+        private IUpdatableRow _output;
+
+        private readonly IEnumerable<string> _lines = new[] {"Line1", "Line2", "Line3"};
+        private readonly IRow _row1 = Substitute.For<IRow>();
+        private readonly IRow _row2 = Substitute.For<IRow>();
+        private readonly IRow _row3 = Substitute.For<IRow>();
+        private readonly MetOfficeObservation _observation1 = new MetOfficeObservation{Year = 2001, Month = 1, MaximumTemperature = null};
+        private readonly MetOfficeObservation _observation2 = new MetOfficeObservation{Year = 2002, Month = 2, MaximumTemperature = 12.3};
+        private readonly MetOfficeObservation _observation3 = new MetOfficeObservation{Year = 2003, Month = 3, MaximumTemperature = 23.4};
+
+        private List<IRow> _actualRows;
+
+        [SetUp]
+        public void SetUp()
         {
-            var metOfficeObservationExtractor = new MetOfficeObservationExtractor();
+            _input = Substitute.For<IUnstructuredReader>();
+            _input.BaseStream.Returns(StreamWithLines(_lines));
 
-            var input = Substitute.For<IUnstructuredReader>();
+            _metOfficeObservationReader = Substitute.For<IMetOfficeObservationReader>();
+            _metOfficeObservationReader.ReadObservations(Arg.Any<IEnumerable<string>>())
+                .Returns(new[] {_observation1, _observation2, _observation3});
 
-            var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(Text));
-            input.BaseStream.Returns(memoryStream);
+            _output = Substitute.For<IUpdatableRow>();
+            _output.AsReadOnly().Returns(_row1, _row2, _row3);
 
-            var output = Substitute.For<IUpdatableRow>();
+            _metOfficeObservationExtractor = new MetOfficeObservationExtractor(_metOfficeObservationReader);
 
-            metOfficeObservationExtractor.Extract(input, output).ToList();
+            _actualRows = _metOfficeObservationExtractor.Extract(_input, _output).ToList();
+        }
 
+        private static MemoryStream StreamWithLines(IEnumerable<string> lines) => new MemoryStream(UTF8.GetBytes(string.Join("\r\n", lines)));
+
+        [Test]
+        public void ReadLinesFromInputStream()
+        {
+            _metOfficeObservationReader.Received()
+                .ReadObservations(Arg.Is<IEnumerable<string>>(x => x.SequenceEqual(_lines)));
+        }
+
+        [Test]
+        public void WriteEachObservationNToOutput()
+        {
             Received.InOrder(() =>
             {
-                CallsToReturnValue(output, 1958, 3, 7.6);
-                CallsToReturnValue(output, 1958, 4, 10.6);
-                CallsToReturnValue(output, 1958, 5, 13.4);
-                CallsToReturnValue(output, 1941, 12, null);
+                CallsToOutputWithValuesFrom(_observation1);
+                CallsToOutputWithValuesFrom(_observation2);
+                CallsToOutputWithValuesFrom(_observation3);
             });
+        }
+
+        private void CallsToOutputWithValuesFrom(MetOfficeObservation observation)
+        {
+            _output.Set("year", observation.Year);
+            _output.Set("month", observation.Month);
+            _output.Set("maximumTemperature", observation.MaximumTemperature);
+            _output.AsReadOnly();
         }
 
         [Test]
         public void ReturnRowsFromOutput()
         {
-            var metOfficeObservationExtractor = new MetOfficeObservationExtractor();
-
-            var input = Substitute.For<IUnstructuredReader>();
-
-            var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(Text));
-            input.BaseStream.Returns(memoryStream);
-
-            var output = Substitute.For<IUpdatableRow>();
-
-            var row1 = Substitute.For<IRow>();
-            var row2 = Substitute.For<IRow>();
-            var row3 = Substitute.For<IRow>();
-            var row4 = Substitute.For<IRow>();
-            output.AsReadOnly().Returns(row1, row2, row3, row4);
-
-            var actualRows = metOfficeObservationExtractor.Extract(input, output).ToArray();
-
-            actualRows.Should().BeEquivalentTo(row1, row2, row3, row4);
+            _actualRows.Should().BeEquivalentTo(_row1, _row2, _row3);
         }
-
-        private static void CallsToReturnValue(IUpdatableRow output, int year, int month, double? maximumTemperature)
-        {
-            output.Set("year", year);
-            output.Set("month", month);
-            output.Set("maximumTemperature", maximumTemperature);
-            output.AsReadOnly();
-        }
-
-        private const string Text = @"Aberporth
-Location: 224100E 252100N, Lat 52.139 Lon -4.570, 133 metres amsl
-Estimated data is marked with a * after the value.
-Missing data (more than 2 days missing in month) is marked by  ---.
-Sunshine data taken from an automatic Kipp & Zonen sensor marked with a #, otherwise sunshine data taken from a Campbell Stokes recorder.
-   yyyy  mm   tmax    tmin      af    rain     sun
-              degC    degC    days      mm   hours
-   1958   3    7.6     1.7       8    21.1   128.8
-   1958   4   10.6     4.6       4    17.8   169.0
-   1958   5   13.4     7.8       0    95.3   190.8
-   1941  12    ---     ---    ---     86.5     ---
-";
     }
 }
