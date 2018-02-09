@@ -1,18 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using FluentAssertions;
 using Microsoft.Analytics.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
-using static System.Text.Encoding;
+using WeatherData.III.Objects.Adla;
+using WeatherData.III.Objects.Domain;
 
-namespace WeatherData.III.Objects.Tests
+namespace WeatherData.III.Objects.Tests.Adla
 {
     [TestFixture]
     public class MetOfficeObservationExtratorShould
     {
-        private IMetOfficeObservationReader _metOfficeObservationReader;
+        private MetOfficeObservationReader _metOfficeObservationReader;
         private MetOfficeObservationExtractor _metOfficeObservationExtractor;
         private IUnstructuredReader _input;
         private IUpdatableRow _output;
@@ -33,7 +35,7 @@ namespace WeatherData.III.Objects.Tests
             _input = Substitute.For<IUnstructuredReader>();
             _input.BaseStream.Returns(StreamWithLines(_lines));
 
-            _metOfficeObservationReader = Substitute.For<IMetOfficeObservationReader>();
+            _metOfficeObservationReader = Substitute.For<MetOfficeObservationReader>((CreateObservation)null);
             _metOfficeObservationReader.ReadObservations(Arg.Any<IEnumerable<string>>())
                 .Returns(new[] {_observation1, _observation2, _observation3});
 
@@ -45,7 +47,7 @@ namespace WeatherData.III.Objects.Tests
             _actualRows = _metOfficeObservationExtractor.Extract(_input, _output).ToList();
         }
 
-        private static MemoryStream StreamWithLines(IEnumerable<string> lines) => new MemoryStream(UTF8.GetBytes(string.Join("\r\n", lines)));
+        private static MemoryStream StreamWithLines(IEnumerable<string> lines) => new MemoryStream(Encoding.UTF8.GetBytes(string.Join("\r\n", lines)));
 
         [Test]
         public void ReadLinesFromInputStream()

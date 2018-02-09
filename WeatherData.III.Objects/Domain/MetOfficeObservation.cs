@@ -1,6 +1,6 @@
-﻿namespace WeatherData.III.Objects
+﻿namespace WeatherData.III.Objects.Domain
 {
-    public class MetOfficeObservation
+    public struct MetOfficeObservation
     {
         public int Year { get; set; }
         public int Month { get; set; }

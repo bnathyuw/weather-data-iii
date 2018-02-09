@@ -42,15 +42,19 @@
     <Reference Include="Microsoft.Analytics.Types" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnumerableExtensions.cs" />
-    <Compile Include="MetOfficeObservation.cs" />
-    <Compile Include="MetOfficeObservationOutputter.cs" />
-    <Compile Include="MetOfficeObservationExtractor.cs" />
-    <Compile Include="MetOfficeObservationReader.cs" />
-    <Compile Include="CreateObservation.cs" />
-    <Compile Include="WalkingSkeletonExtractor.cs" />
+    <Compile Include="Outputters.cs" />
+    <Compile Include="Domain\EnumerableExtensions.cs" />
+    <Compile Include="Extractors.cs" />
+    <Compile Include="Domain\LocatedObervationWriter.cs" />
+    <Compile Include="Domain\LocatedObservation.cs" />
+    <Compile Include="Domain\MetOfficeObservation.cs" />
+    <Compile Include="Adla\MetOfficeObservationOutputter.cs" />
+    <Compile Include="Adla\MetOfficeObservationExtractor.cs" />
+    <Compile Include="Domain\MetOfficeObservationReader.cs" />
+    <Compile Include="Domain\CreateObservation.cs" />
+    <Compile Include="Adla\WalkingSkeletonExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WalkingSkeletonOutputter.cs" />
+    <Compile Include="Adla\WalkingSkeletonOutputter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

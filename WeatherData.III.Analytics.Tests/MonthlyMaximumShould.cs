@@ -2,6 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using WeatherData.III.Objects;
+using WeatherData.III.Objects.Adla;
 using static WeatherData.III.Analytics.Tests.AnalyticsTestJig;
 
 namespace WeatherData.III.Analytics.Tests

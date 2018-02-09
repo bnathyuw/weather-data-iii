@@ -1,9 +1,9 @@
 ﻿using System.Runtime.Serialization.Json;
 using Microsoft.Analytics.Interfaces;
 
-namespace WeatherData.III.Objects
+namespace WeatherData.III.Objects.Adla
 {
-    public class MetOfficeObservationOutputter : IOutputter
+    internal class MetOfficeObservationOutputter : IOutputter
     {
         public override void Output(IRow input, IUnstructuredWriter output)
         {

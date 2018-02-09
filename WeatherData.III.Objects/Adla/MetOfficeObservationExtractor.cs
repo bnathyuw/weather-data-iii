@@ -2,19 +2,15 @@
 using System.IO;
 using System.Linq;
 using Microsoft.Analytics.Interfaces;
+using WeatherData.III.Objects.Domain;
 
-namespace WeatherData.III.Objects
+namespace WeatherData.III.Objects.Adla
 {
-    public class MetOfficeObservationExtractor : IExtractor
+    internal class MetOfficeObservationExtractor : IExtractor
     {
-        public static MetOfficeObservationExtractor WithDefaultDependencies()
-        {
-            return new MetOfficeObservationExtractor(new MetOfficeObservationReader(new CreateObservation()));
-        }
+        private readonly MetOfficeObservationReader _metOfficeObservationReader;
 
-        private readonly IMetOfficeObservationReader _metOfficeObservationReader;
-
-        internal MetOfficeObservationExtractor(IMetOfficeObservationReader metOfficeObservationReader)
+        internal MetOfficeObservationExtractor(MetOfficeObservationReader metOfficeObservationReader)
         {
             _metOfficeObservationReader = metOfficeObservationReader;
         }

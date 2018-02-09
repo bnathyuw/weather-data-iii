@@ -1,8 +1,7 @@
 ﻿using System.IO;
-using System.Text;
 using Microsoft.Analytics.Interfaces;
 
-namespace WeatherData.III.Objects
+namespace WeatherData.III.Objects.Adla
 {
     public class WalkingSkeletonOutputter : IOutputter
     {

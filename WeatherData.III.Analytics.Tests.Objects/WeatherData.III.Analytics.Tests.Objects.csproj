@@ -43,11 +43,15 @@
     <Reference Include="Microsoft.Analytics.Types" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MaximumTemperatureInput.cs" />
-    <Compile Include="MetOfficeObservationExtractor.cs" />
-    <Compile Include="MetOfficeObservationOutputter.cs" />
+    <Compile Include="Extractors.cs" />
+    <Compile Include="Adla\MaximumTemperatureInput.cs" />
+    <Compile Include="Adla\MaximumTemperatureOutput.cs" />
+    <Compile Include="Adla\MetOfficeObservationExtractor.cs" />
+    <Compile Include="Adla\MetOfficeObservationOutputter.cs" />
+    <Compile Include="Outputters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

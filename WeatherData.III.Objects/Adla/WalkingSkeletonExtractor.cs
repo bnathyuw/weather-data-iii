@@ -1,9 +1,8 @@
-﻿using Microsoft.Analytics.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using Microsoft.Analytics.Interfaces;
 
-namespace WeatherData.III.Objects
+namespace WeatherData.III.Objects.Adla
 {
     public class WalkingSkeletonExtractor : IExtractor
     {

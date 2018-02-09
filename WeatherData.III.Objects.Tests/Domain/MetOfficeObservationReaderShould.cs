@@ -3,13 +3,14 @@ using System.Linq;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
+using WeatherData.III.Objects.Domain;
 
-namespace WeatherData.III.Objects.Tests
+namespace WeatherData.III.Objects.Tests.Domain
 {
     [TestFixture]
     public class MetOfficeObservationReaderShould
     {
-        private ICreateObservation _createObservation;
+        private CreateObservation _createObservation;
         private MetOfficeObservationReader _metOfficeObservationReader;
 
         private const string UnitsHeader = "              degC    degC    days      mm   hours";
@@ -31,7 +32,7 @@ namespace WeatherData.III.Objects.Tests
         [SetUp]
         public void SetUp()
         {
-            _createObservation = Substitute.For<ICreateObservation>();
+            _createObservation = Substitute.For<CreateObservation>();
 
             _metOfficeObservationReader = new MetOfficeObservationReader(_createObservation);
         }

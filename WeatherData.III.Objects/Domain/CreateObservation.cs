@@ -1,20 +1,15 @@
-using static System.StringSplitOptions;
+using System;
 
-namespace WeatherData.III.Objects
+namespace WeatherData.III.Objects.Domain
 {
-    internal interface ICreateObservation
-    {
-        MetOfficeObservation FromLine(string line);
-    }
-
-    internal class CreateObservation : ICreateObservation
+    internal class CreateObservation
     {
         private const string NoObservation = "---";
 
-        public MetOfficeObservation FromLine(string line) =>
+        public virtual MetOfficeObservation FromLine(string line) =>
             ObservationFromParts(PartsSeparatedBySpaces(line));
 
-        private static string[] PartsSeparatedBySpaces(string line) => line.Split(new[] {' '}, RemoveEmptyEntries);
+        private static string[] PartsSeparatedBySpaces(string line) => line.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 
         private static MetOfficeObservation ObservationFromParts(string[] parts) => new MetOfficeObservation
         {

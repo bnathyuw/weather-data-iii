@@ -1,7 +1,8 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using WeatherData.III.Objects.Domain;
 
-namespace WeatherData.III.Objects.Tests
+namespace WeatherData.III.Objects.Tests.Domain
 {
     [TestFixture]
     public class CreateObservationShould

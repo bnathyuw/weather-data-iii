@@ -5,8 +5,8 @@ REFERENCE ASSEMBLY [Objects];
 @data =
     EXTRACT value int
     FROM "input\\walkingSkeleton\\data.txt"
-    USING new WeatherData.[III].Objects.WalkingSkeletonExtractor();
+    USING WeatherData.[III].Objects.Extractors.WalkingSkeleton;
 
 OUTPUT @data
 TO "output\\walkingSkeleton\\data.txt"
-USING new WeatherData.[III].Objects.WalkingSkeletonOutputter();
+USING WeatherData.[III].Objects.Outputters.WalkingSkeleton;
