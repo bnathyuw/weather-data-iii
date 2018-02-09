@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Web.Script.Serialization;
 using FluentAssertions;
 using Microsoft.Analytics.LocalRun;
@@ -81,14 +82,17 @@ namespace WeatherData.III.Analytics.Tests
             }
         }
 
-        public static T Read<T>(string fileName)
+        public static IEnumerable<T> Read<T>(string fileName)
         {
             using (var stream = new FileStream(Combine(DataRoot, fileName), FileMode.Open))
             {
                 using (var streamReader = new StreamReader(stream))
                 {
                     var serializer = new JavaScriptSerializer();
-                    return serializer.Deserialize<T>(streamReader.ReadLine());
+                    while (!streamReader.EndOfStream)
+                    {
+                        yield return serializer.Deserialize<T>(streamReader.ReadLine());
+                    }
                 }
             }
         }

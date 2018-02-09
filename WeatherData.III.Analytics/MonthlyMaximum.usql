@@ -11,15 +11,22 @@ REFERENCE ASSEMBLY [Objects];
     USING WeatherData.[III].Objects.Extractors.MetOfficeObservations;
 
 @maxima =
-    SELECT location,
-           year,
-           month,
+    SELECT month,
            MAX(maximumTemperature) AS maximumTemperature
     FROM @observations
-    GROUP BY location,
-             year,
-             month;
+    GROUP BY month;
 
-OUTPUT @maxima
+@output =
+    SELECT @observations.location,
+           @observations.year,
+           @observations.month,
+           @observations.maximumTemperature
+    FROM @observations
+         INNER JOIN
+             @maxima
+         ON @observations.maximumTemperature == @maxima.maximumTemperature
+            AND @observations.month == @maxima.month;
+
+OUTPUT @output
 TO "output\\monthlyMaximum.csv"
 USING WeatherData.[III].Objects.Outputters.MetOfficeObservations;
