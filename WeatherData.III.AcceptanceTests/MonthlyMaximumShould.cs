@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.IO;
+using FluentAssertions;
+using NUnit.Framework;
 using static WeatherData.III.AcceptanceTests.AnalyticsTestJig;
 
 namespace WeatherData.III.AcceptanceTests
@@ -14,7 +16,9 @@ namespace WeatherData.III.AcceptanceTests
             // When the monthly maximum script is run
             Run(AnalyticsScript("monthlyMaximum.usql"));
             // And the results are read
+            var output = ReadOutput("monthlyMaximum.csv");
             // Then the report has twelve lines
+            output.Split('\r', '\n').Length.Should().Be(12);
             // One for each month of the year
         }
     }

@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.IO;
+using FluentAssertions;
 using Microsoft.Analytics.LocalRun;
 using NUnit.Framework;
 using static System.IO.Directory;
@@ -55,6 +56,11 @@ namespace WeatherData.III.AcceptanceTests
         private static string DataDefinitionScript(string scriptName)
         {
             return Combine(CurrentContext.TestDirectory, "..", "..", "..", "WeatherData.III.DataDefinition", scriptName);
+        }
+
+        public static string ReadOutput(string file)
+        {
+            return ReadAllText(Combine(DataRoot, "output", file));
         }
     }
 }

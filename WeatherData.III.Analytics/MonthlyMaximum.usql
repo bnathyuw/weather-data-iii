@@ -10,6 +10,16 @@ REFERENCE ASSEMBLY [Objects];
     FROM "input\\metOfficeObservations\\{location}data.txt"
     USING WeatherData.[III].Objects.Extractors.MetOfficeObservations;
 
-OUTPUT @observations
+@maxima =
+    SELECT location,
+           year,
+           month,
+           MAX(maximumTemperature) AS maximumTemperature
+    FROM @observations
+    GROUP BY location,
+             year,
+             month;
+
+OUTPUT @maxima
 TO "output\\monthlyMaximum.csv"
 USING WeatherData.[III].Objects.Outputters.MetOfficeObservations;

@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using System.Runtime.Serialization.Json;
+using System.Web.Script.Serialization;
 using FluentAssertions;
 using Microsoft.Analytics.LocalRun;
 using NUnit.Framework;
@@ -13,7 +13,7 @@ namespace WeatherData.III.Analytics.Tests
     [SetUpFixture]
     public class AnalyticsTestJig
     {
-        public static readonly string DataRoot;
+        private static readonly string DataRoot;
 
         static AnalyticsTestJig()
         {
@@ -66,12 +66,18 @@ namespace WeatherData.III.Analytics.Tests
             return Combine(CurrentContext.TestDirectory, "..", "..", "..", "WeatherData.III.Analytics.Tests.DD", scriptName);
         }
 
-        public static void Write<T>(string fileName, T input)
+        public static void Write<T>(string fileName, params T[] inputs)
         {
-            using (var stream = new FileStream(Combine(DataRoot, fileName), FileMode.Create))
+            var javaScriptSerializer = new JavaScriptSerializer();
+            using (var stream = new FileStream(Combine(DataRoot, fileName), FileMode.Append))
             {
-                var serializer = new DataContractJsonSerializer(typeof(T));
-                serializer.WriteObject(stream, input);
+                using (var streamWriter = new StreamWriter(stream))
+                {
+                    foreach (var input in inputs)
+                    {
+                        streamWriter.WriteLine(javaScriptSerializer.Serialize(input));
+                    }
+                }
             }
         }
 
@@ -79,8 +85,11 @@ namespace WeatherData.III.Analytics.Tests
         {
             using (var stream = new FileStream(Combine(DataRoot, fileName), FileMode.Open))
             {
-                var serializer = new DataContractJsonSerializer(typeof(T));
-                return (T) serializer.ReadObject(stream);
+                using (var streamReader = new StreamReader(stream))
+                {
+                    var serializer = new JavaScriptSerializer();
+                    return serializer.Deserialize<T>(streamReader.ReadLine());
+                }
             }
         }
     }
