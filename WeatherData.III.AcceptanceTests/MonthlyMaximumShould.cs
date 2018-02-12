@@ -1,6 +1,6 @@
-﻿using System.IO;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using static System.StringSplitOptions;
 using static WeatherData.III.AcceptanceTests.AnalyticsTestJig;
 
 namespace WeatherData.III.AcceptanceTests
@@ -17,8 +17,9 @@ namespace WeatherData.III.AcceptanceTests
             Run(AnalyticsScript("monthlyMaximum.usql"));
             // And the results are read
             var output = ReadOutput("monthlyMaximum.csv");
-            // Then the report has twelve lines
-            output.Split('\r', '\n').Length.Should().Be(12);
+            // Then the report has twelve lines (should it?)
+            var lines = output.Split(new []{'\r', '\n'}, RemoveEmptyEntries);
+            lines.Length.Should().Be(12);
             // One for each month of the year
         }
     }
