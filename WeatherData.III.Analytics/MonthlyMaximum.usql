@@ -23,15 +23,17 @@ DECLARE @outputFile = "output\\monthlyMaximum.csv";
     GROUP BY month;
 
 @output =
-    SELECT @observations.location,
-           @observations.year,
+    SELECT ANY_VALUE(@observations.location) AS location,
+           ANY_VALUE(@observations.year) ?? 0 AS year,
            @observations.month,
            @observations.maximumTemperature
     FROM @observations
          INNER JOIN
              @maxima
          ON @observations.maximumTemperature == @maxima.maximumTemperature
-            AND @observations.month == @maxima.month;
+            AND @observations.month == @maxima.month
+    GROUP BY @observations.maximumTemperature,
+             @observations.month;
 
 OUTPUT @output
 TO @outputFile

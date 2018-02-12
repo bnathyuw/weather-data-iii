@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 using WeatherData.III.Objects.Adla;
 using static WeatherData.III.Analytics.Tests.AnalyticsTestJig;
@@ -121,6 +122,21 @@ namespace WeatherData.III.Analytics.Tests
             var output = Read<MaximumTemperatureOutput>("output\\monthlyMaximum.csv");
 
             output.Should().BeInAscendingOrder(x => x.Month);
+        }
+
+        [Test]
+        public void OnlySelectOneObservationWhenTheSameReadingOccursMoreThanOnce()
+        {
+            Write($"input\\metOfficeObservations\\{Location}data.txt",
+                new MaximumTemperatureInput { Year = 1991, Month = 1, MaximumTemperature = 1 },
+                new MaximumTemperatureInput { Year = 1992, Month = 1, MaximumTemperature = 1 },
+                new MaximumTemperatureInput { Year = 1993, Month = 1, MaximumTemperature = 1 });
+
+            Run(AnalyticsScript("monthlyMaximum.usql"));
+
+            var output = Read<MaximumTemperatureOutput>("output\\monthlyMaximum.csv");
+
+            output.Single().MaximumTemperature.Should().Be(1);
         }
     }
 }
