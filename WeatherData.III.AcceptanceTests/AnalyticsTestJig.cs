@@ -1,5 +1,4 @@
-﻿using System.IO;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.Analytics.LocalRun;
 using NUnit.Framework;
 using static System.IO.Directory;
