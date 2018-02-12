@@ -2,13 +2,19 @@
 
 REFERENCE ASSEMBLY [Objects];
 
+USING Extractors = WeatherData.[III].Objects.Extractors;
+USING Outputters = WeatherData.[III].Objects.Outputters;
+
+DECLARE @inputFiles = "input\\metOfficeObservations\\{location}data.txt";
+DECLARE @outputFile = "output\\monthlyMaximum.csv";
+
 @observations =
     EXTRACT location string,
             year int,
             month int,
             maximumTemperature double?
-    FROM "input\\metOfficeObservations\\{location}data.txt"
-    USING WeatherData.[III].Objects.Extractors.MetOfficeObservations;
+    FROM @inputFiles
+    USING Extractors.MetOfficeObservations;
 
 @maxima =
     SELECT month,
@@ -28,5 +34,5 @@ REFERENCE ASSEMBLY [Objects];
             AND @observations.month == @maxima.month;
 
 OUTPUT @output
-TO "output\\monthlyMaximum.csv"
-USING WeatherData.[III].Objects.Outputters.MetOfficeObservations;
+TO @outputFile
+USING Outputters.MetOfficeObservations;
