@@ -43,7 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adla\InputReader.cs" />
+    <Compile Include="Adla\LocatedObservationReader.cs" />
     <Compile Include="Adla\OutputWriter.cs" />
+    <Compile Include="Adla\RowFactory.cs" />
     <Compile Include="Outputters.cs" />
     <Compile Include="Domain\EnumerableExtensions.cs" />
     <Compile Include="Extractors.cs" />

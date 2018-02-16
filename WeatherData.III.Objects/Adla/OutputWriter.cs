@@ -1,16 +1,16 @@
-﻿using Microsoft.Analytics.Interfaces;
-using WeatherData.III.Objects.Domain;
+﻿using System.IO;
+using Microsoft.Analytics.Interfaces;
 
 namespace WeatherData.III.Objects.Adla
 {
     internal class OutputWriter
     {
-        public virtual IRow Write(IUpdatableRow output, MetOfficeObservation metOfficeObservation)
+        public virtual void WriteTo(IUnstructuredWriter output, string outputString)
         {
-            output.Set("year", metOfficeObservation.Year);
-            output.Set("month", metOfficeObservation.Month);
-            output.Set("maximumTemperature", metOfficeObservation.MaximumTemperature);
-            return output.AsReadOnly();
+            using (var streamWriter = new StreamWriter(output.BaseStream))
+            {
+                streamWriter.WriteLine(outputString);
+            }
         }
     }
 }

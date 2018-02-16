@@ -8,14 +8,14 @@ namespace WeatherData.III.Objects.Adla
     {
         private readonly MetOfficeDatasetParser _metOfficeDatasetParser;
         private readonly InputReader _inputReader;
-        private readonly OutputWriter _outputWriter;
+        private readonly RowFactory _rowFactory;
 
         internal MetOfficeObservationExtractor(InputReader inputReader,
-            MetOfficeDatasetParser metOfficeDatasetParser, OutputWriter outputWriter)
+            MetOfficeDatasetParser metOfficeDatasetParser, RowFactory rowFactory)
         {
             _metOfficeDatasetParser = metOfficeDatasetParser;
             _inputReader = inputReader;
-            _outputWriter = outputWriter;
+            _rowFactory = rowFactory;
         }
 
         public override IEnumerable<IRow> Extract(IUnstructuredReader input, IUpdatableRow output)
@@ -24,7 +24,7 @@ namespace WeatherData.III.Objects.Adla
             var metOfficeObservations = _metOfficeDatasetParser.Parse(inputLines);
             foreach (var metOfficeObservation in metOfficeObservations)
             {
-                yield return _outputWriter.Write(output, metOfficeObservation);
+                yield return _rowFactory.Create(output, metOfficeObservation);
             }
         }
     }

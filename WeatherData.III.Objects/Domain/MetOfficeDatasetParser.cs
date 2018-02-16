@@ -14,10 +14,7 @@ namespace WeatherData.III.Objects.Domain
             _metOfficeObservationParser = metOfficeObservationParser;
         }
 
-        public virtual IEnumerable<MetOfficeObservation> Parse(IEnumerable<string> lines)
-        {
-            return lines.SkipUntil(Units).Select(_metOfficeObservationParser.Parse);
-        }
+        public virtual IEnumerable<MetOfficeObservation> Parse(IEnumerable<string> lines) => lines.SkipUntil(Units).Select(_metOfficeObservationParser.Parse);
 
         private static bool Units(string line) => line == UnitsLine;
     }

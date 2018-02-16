@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Text;
-using FluentAssertions;
-using Microsoft.Analytics.Interfaces;
+﻿using Microsoft.Analytics.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
 using WeatherData.III.Objects.Adla;
@@ -12,55 +9,41 @@ namespace WeatherData.III.Objects.Tests.Adla
     [TestFixture]
     public class MetOfficeObservationOutputterShould
     {
-        private LocatedObervationWriter _locatedObervationWriter;
-        private MemoryStream _memoryStream;
-        private const string Location = "Clerkenwell";
-        private const int Year = 2018;
-        private const int Month = 2;
-        private const double MaximumTemperature = 12.3;
+        private readonly LocatedObservation _locatedObservation = new LocatedObservation();
         private const string OutputString = "Output string";
+
+        private IRow _input;
+        private IUnstructuredWriter _output;
+
+        private LocatedObservationReader _locatedObservationReader;
+        private LocatedObervationWriter _locatedObervationWriter;
+        private OutputWriter _outputWriter;
+
+        private MetOfficeObservationOutputter _metOfficeObservationOutputter;
 
         [SetUp]
         public void SetUp()
         {
-            var input = Substitute.For<IRow>();
-            input.Get<string>("location").Returns(Location);
-            input.Get<int>("year").Returns(Year);
-            input.Get<int>("month").Returns(Month);
-            input.Get<double?>("maximumTemperature").Returns(MaximumTemperature);
+            _input = Substitute.For<IRow>();
+            _output = Substitute.For<IUnstructuredWriter>();
 
+            _locatedObservationReader = Substitute.For<LocatedObservationReader>();
             _locatedObervationWriter = Substitute.For<LocatedObervationWriter>();
-            _locatedObervationWriter.OutputString(Arg.Any<LocatedObservation>()).Returns(OutputString);
+            _outputWriter = Substitute.For<OutputWriter>();
 
-            var output = Substitute.For<IUnstructuredWriter>();
-            _memoryStream = new MemoryStream();
-            output.BaseStream.Returns(_memoryStream);
+            _metOfficeObservationOutputter = new MetOfficeObservationOutputter(_locatedObservationReader, _locatedObervationWriter, _outputWriter);
 
-            var outputter = new MetOfficeObservationOutputter(_locatedObervationWriter);
-
-            outputter.Output(input, output);
-        }
-
-        [Test]
-        public void ReadDataFromInput()
-        {
-            _locatedObervationWriter.Received().OutputString(new LocatedObservation
-            {
-                Location = Location,
-                MaximumTemperature = MaximumTemperature,
-                Year = Year,
-                Month = Month
-            });
         }
 
         [Test]
         public void WriteDataToOutput()
         {
-            StringWrittenTo(_memoryStream).Should().Be($"{OutputString}\r\n");
+            _locatedObservationReader.ReadFrom(_input).Returns(_locatedObservation);
+            _locatedObervationWriter.OutputString(_locatedObservation).Returns(OutputString);
+
+            _metOfficeObservationOutputter.Output(_input, _output);
+
+            _outputWriter.Received().WriteTo(_output, OutputString);
         }
-
-        private static string StringWrittenTo(MemoryStream memoryStream) => GetString(memoryStream.ToArray());
-
-        private static string GetString(byte[] bytes) => Encoding.UTF8.GetString(bytes, 0, bytes.Length);
     }
 }

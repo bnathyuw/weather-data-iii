@@ -82,7 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adla\InputReaderShould.cs" />
+    <Compile Include="Adla\LocatedObservationReaderShould.cs" />
     <Compile Include="Adla\OutputWriterShould.cs" />
+    <Compile Include="Adla\RowFactoryShould.cs" />
     <Compile Include="Domain\MetOfficeObservationParserShould.cs" />
     <Compile Include="Adla\MetOfficeObservationExtractorShould.cs" />
     <Compile Include="Adla\MetOfficeObservationOutputterShould.cs" />

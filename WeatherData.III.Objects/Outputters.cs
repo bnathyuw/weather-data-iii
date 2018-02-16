@@ -8,7 +8,7 @@ namespace WeatherData.III.Objects
     {
         public static IOutputter WalkingSkeleton => new WalkingSkeletonOutputter();
 
-        public static IOutputter MetOfficeObservations => new MetOfficeObservationOutputter(new LocatedObervationWriter());
+        public static IOutputter MetOfficeObservations => new MetOfficeObservationOutputter(new LocatedObservationReader(), new LocatedObervationWriter(), new OutputWriter());
 
     }
 }

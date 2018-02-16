@@ -26,7 +26,7 @@ namespace WeatherData.III.Objects.Tests.Adla
 
         private InputReader _inputReader;
         private IUnstructuredReader _input;
-        private OutputWriter _outputWriter;
+        private RowFactory _rowFactory;
 
         [SetUp]
         public void SetUp()
@@ -36,9 +36,9 @@ namespace WeatherData.III.Objects.Tests.Adla
 
             _inputReader = Substitute.For<InputReader>();
             _metOfficeDatasetParser = Substitute.For<MetOfficeDatasetParser>((MetOfficeObservationParser)null);
-            _outputWriter = Substitute.For<OutputWriter>();
+            _rowFactory = Substitute.For<RowFactory>();
 
-            _metOfficeObservationExtractor = new MetOfficeObservationExtractor(_inputReader, _metOfficeDatasetParser, _outputWriter);
+            _metOfficeObservationExtractor = new MetOfficeObservationExtractor(_inputReader, _metOfficeDatasetParser, _rowFactory);
         }
 
         [Test]
@@ -46,9 +46,9 @@ namespace WeatherData.III.Objects.Tests.Adla
         {
             _inputReader.ReadLines(_input).Returns(_lines);
             _metOfficeDatasetParser.Parse(_lines).Returns(new[] { _observation1, _observation2, _observation3 });
-            _outputWriter.Write(_output, _observation1).Returns(_row1);
-            _outputWriter.Write(_output, _observation2).Returns(_row2);
-            _outputWriter.Write(_output, _observation3).Returns(_row3);
+            _rowFactory.Create(_output, _observation1).Returns(_row1);
+            _rowFactory.Create(_output, _observation2).Returns(_row2);
+            _rowFactory.Create(_output, _observation3).Returns(_row3);
 
             var actualRows = _metOfficeObservationExtractor.Extract(_input, _output).ToList();
 

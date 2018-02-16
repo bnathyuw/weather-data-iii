@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Microsoft.Analytics.Interfaces;
+﻿using Microsoft.Analytics.Interfaces;
 using WeatherData.III.Objects.Domain;
 
 namespace WeatherData.III.Objects.Adla
@@ -7,30 +6,22 @@ namespace WeatherData.III.Objects.Adla
     internal class MetOfficeObservationOutputter : IOutputter
     {
         private readonly LocatedObervationWriter _locatedObervationWriter;
+        private readonly LocatedObservationReader _locatedObservationReader;
+        private readonly OutputWriter _outputWriter;
 
-        internal MetOfficeObservationOutputter(LocatedObervationWriter locatedObervationWriter)
+        internal MetOfficeObservationOutputter(LocatedObservationReader locatedObservationReader,
+            LocatedObervationWriter locatedObervationWriter, OutputWriter outputWriter)
         {
+            _locatedObservationReader = locatedObservationReader;
             _locatedObervationWriter = locatedObervationWriter;
+            _outputWriter = outputWriter;
         }
 
         public override void Output(IRow input, IUnstructuredWriter output)
         {
-            using (var streamWriter = new StreamWriter(output.BaseStream))
-            {
-                var locatedObservation = ReadFrom(input);
-                streamWriter.WriteLine(_locatedObervationWriter.OutputString(locatedObservation));
-            }
-        }
-
-        private static LocatedObservation ReadFrom(IRow input)
-        {
-            return new LocatedObservation
-            {
-                Location = input.Get<string>("location"),
-                Month = input.Get<int>("month"),
-                Year = input.Get<int>("year"),
-                MaximumTemperature = input.Get<double?>("maximumTemperature")
-            };
+            var locatedObservation = _locatedObservationReader.ReadFrom(input);
+            var outputString = _locatedObervationWriter.OutputString(locatedObservation);
+            _outputWriter.WriteTo(output, outputString);
         }
     }
 }
