@@ -8,6 +8,6 @@ namespace WeatherData.III.Objects
     {
         public static IExtractor WalkingSkeleton => new WalkingSkeletonExtractor();
 
-        public static IExtractor MetOfficeObservations => new MetOfficeObservationExtractor(new MetOfficeObservationReader(new CreateObservation()));
+        public static IExtractor MetOfficeObservations => new MetOfficeObservationExtractor(new InputReader(), new MetOfficeDatasetParser(new MetOfficeObservationParser()), new OutputWriter());
     }
 }

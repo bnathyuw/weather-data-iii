@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Microsoft.Analytics.Interfaces;
 using WeatherData.III.Objects.Domain;
 
@@ -8,36 +6,26 @@ namespace WeatherData.III.Objects.Adla
 {
     internal class MetOfficeObservationExtractor : IExtractor
     {
-        private readonly MetOfficeObservationReader _metOfficeObservationReader;
+        private readonly MetOfficeDatasetParser _metOfficeDatasetParser;
+        private readonly InputReader _inputReader;
+        private readonly OutputWriter _outputWriter;
 
-        internal MetOfficeObservationExtractor(MetOfficeObservationReader metOfficeObservationReader)
+        internal MetOfficeObservationExtractor(InputReader inputReader,
+            MetOfficeDatasetParser metOfficeDatasetParser, OutputWriter outputWriter)
         {
-            _metOfficeObservationReader = metOfficeObservationReader;
+            _metOfficeDatasetParser = metOfficeDatasetParser;
+            _inputReader = inputReader;
+            _outputWriter = outputWriter;
         }
 
         public override IEnumerable<IRow> Extract(IUnstructuredReader input, IUpdatableRow output)
         {
-            return _metOfficeObservationReader.ReadObservations(ReadLines(input))
-                .Select(metOfficeObservation => Write(output, metOfficeObservation));
-        }
-
-        private static IEnumerable<string> ReadLines(IUnstructuredReader input)
-        {
-            using (var streamReader = new StreamReader(input.BaseStream))
+            var inputLines = _inputReader.ReadLines(input);
+            var metOfficeObservations = _metOfficeDatasetParser.Parse(inputLines);
+            foreach (var metOfficeObservation in metOfficeObservations)
             {
-                while (!streamReader.EndOfStream)
-                {
-                    yield return streamReader.ReadLine();
-                }
+                yield return _outputWriter.Write(output, metOfficeObservation);
             }
-        }
-
-        private static IRow Write(IUpdatableRow output, MetOfficeObservation metOfficeObservation)
-        {
-            output.Set("year", metOfficeObservation.Year);
-            output.Set("month", metOfficeObservation.Month);
-            output.Set("maximumTemperature", metOfficeObservation.MaximumTemperature);
-            return output.AsReadOnly();
         }
     }
 }

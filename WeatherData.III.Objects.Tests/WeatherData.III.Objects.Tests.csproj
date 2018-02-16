@@ -81,10 +81,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\CreateObservationShould.cs" />
+    <Compile Include="Adla\InputReaderShould.cs" />
+    <Compile Include="Adla\OutputWriterShould.cs" />
+    <Compile Include="Domain\MetOfficeObservationParserShould.cs" />
     <Compile Include="Adla\MetOfficeObservationExtractorShould.cs" />
     <Compile Include="Adla\MetOfficeObservationOutputterShould.cs" />
-    <Compile Include="Domain\MetOfficeObservationReaderShould.cs" />
+    <Compile Include="Domain\MetOfficeDatasetParserShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

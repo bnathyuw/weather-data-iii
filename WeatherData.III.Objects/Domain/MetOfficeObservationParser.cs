@@ -2,11 +2,11 @@ using System;
 
 namespace WeatherData.III.Objects.Domain
 {
-    internal class CreateObservation
+    internal class MetOfficeObservationParser
     {
         private const string NoObservation = "---";
 
-        public virtual MetOfficeObservation FromLine(string line) =>
+        public virtual MetOfficeObservation Parse(string line) =>
             ObservationFromParts(PartsSeparatedBySpaces(line));
 
         private static string[] PartsSeparatedBySpaces(string line) => line.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
