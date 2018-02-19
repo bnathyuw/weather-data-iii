@@ -2,11 +2,14 @@
 
 REFERENCE ASSEMBLY [Objects];
 
+USING Extractors = WeatherData.[III].Objects.Extractors;
+USING Outputters = WeatherData.[III].Objects.Outputters;
+
 @data =
     EXTRACT value int
     FROM "input\\walkingSkeleton\\data.txt"
-    USING WeatherData.[III].Objects.Extractors.WalkingSkeleton;
+    USING Extractors.WalkingSkeleton;
 
 OUTPUT @data
 TO "output\\walkingSkeleton\\data.txt"
-USING WeatherData.[III].Objects.Outputters.WalkingSkeleton;
+USING sOutputters.WalkingSkeleton;
